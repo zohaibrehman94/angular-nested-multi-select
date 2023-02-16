@@ -1,0 +1,62 @@
+<mat-form-field appearance="outline">
+  <mat-label>Status</mat-label>
+  <input
+    type="text"
+    readonly
+    matInput
+    placeholder="Status"
+    [matAutocomplete]="autoGroup"
+    #trigger="matAutocompleteTrigger"
+    [value]="inputValue"
+    (click)="trigger.openPanel()"
+  />
+  <div matSuffix style="display: flex">
+    <button
+      aria-label="Clear"
+      (click)="trigger.openPanel()"
+      mat-icon-button
+      type="button"
+    >
+      <mat-icon
+        style="
+          transform: scale(1);
+          margin-top: auto;
+          margin-bottom: auto;
+          height: auto;
+          color: gray;
+        "
+        >arrow_drop_down</mat-icon
+      >
+    </button>
+  </div>
+  <mat-autocomplete #autoGroup="matAutocomplete">
+    <mat-optgroup *ngFor="let group of stateList">
+      <div>
+        <mat-checkbox
+          [checked]="group.selected"
+          (change)="toggleParent($event, group)"
+          (click)="$event.stopPropagation()"
+        >
+          {{group.letter}}
+        </mat-checkbox>
+      </div>
+      <mat-option
+        *ngFor="let name of group.names"
+        [value]="name"
+        class="list-show"
+      >
+        <mat-checkbox
+          [checked]="group.checked"
+          (change)="toggleSelection($event, name, group)"
+          (click)="$event.stopPropagation()"
+        >
+          {{name}}
+        </mat-checkbox>
+      </mat-option>
+    </mat-optgroup>
+  </mat-autocomplete>
+</mat-form-field>
+
+<!-- Copyright 2020 Google LLC. All Rights Reserved.
+    Use of this source code is governed by an MIT-style license that
+    can be found in the LICENSE file at http://angular.io/license -->
